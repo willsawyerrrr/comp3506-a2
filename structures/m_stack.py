@@ -8,13 +8,35 @@ class Stack:
     A simple composition-based stack backed by an ExtensibleList
     """
 
-    """
-    MOSTLY HIDDEN UNTIL ALL A1 SUBMISSIONS COME IN
-    """
-
     def __init__(self) -> None:
-        pass
+        self._data = ExtensibleList()
 
-    """
-    WILL BE UPDATED SOON
-    """
+    def push(self, elem: Any) -> None:
+        """
+        Push some data `elem` onto the stack
+        """
+        self._data.append(elem)
+
+    def pop(self) -> Any | None:
+        """
+        Remove and return the top element or None if empty
+        """
+        if self._data.is_empty():
+            return None
+        index = self._data.get_size() - 1
+        value = self._data.remove_at(index)
+        return value
+
+    def peek(self) -> Any | None:
+        """
+        Return the top element but do not remove it
+        """
+        index = self._data.get_size() - 1
+        # get_at handles indexes being out of bounds
+        return self._data.get_at(index)
+
+    def is_empty(self) -> bool:
+        return self._data.is_empty()
+
+    def get_size(self) -> int:
+        return self._data.get_size()
