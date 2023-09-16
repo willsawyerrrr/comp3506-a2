@@ -1,14 +1,9 @@
 import argparse
 import random
-
-# Import helper libraries
 import sys
 import time
 
-# Import our new structures
 from structures.m_entry import *
-
-# Import our data structures from A1 (just in case you want them)
 from structures.m_extensible_list import ExtensibleList
 from structures.m_map import Map
 from structures.m_pqueue import PriorityQueue

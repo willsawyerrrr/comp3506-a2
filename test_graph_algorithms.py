@@ -1,14 +1,10 @@
 import argparse
 import curses
 import random
-
-# Import helper libraries
 import sys
 import time
 
 from algorithms.airlines import *
-
-# Import our pathfinding algorithms and other data types we need
 from structures.m_graph import *
 
 

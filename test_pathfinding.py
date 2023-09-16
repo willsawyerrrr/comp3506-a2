@@ -1,14 +1,10 @@
 import argparse
 import curses
 import random
-
-# Import helper libraries
 import sys
 import time
 
 from algorithms.pathfinding import *
-
-# Import our pathfinding algorithms and other data types we need
 from structures.m_graph import *
 
 # Configuration: The time (in seconds) to sleep between moves in the viz
