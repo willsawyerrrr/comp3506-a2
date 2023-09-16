@@ -159,8 +159,9 @@ class MazeDraw:
         """
         maze.init_screen()
         maze.draw_visited(visited)
-        maze.draw_path(path)
-
+        # Check disconnected before painting the path
+        if not path == TraversalFailure.DISCONNECTED:
+            maze.draw_path(path)
         state = 0
         time.sleep(0.5)
 
@@ -196,7 +197,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--viz",
         action="store_true",
-        help="Visualize the algorithm? Requires a LatticeGraph (a 2D graph)",
+        help="Visualize the algorithm? Requires a LatticeGraph (a 2D graph). Press 'q' to quit the viz at any time.",
     )
     parser.add_argument("--seed", type=int, required=True, help="Seed the PRNG")
 
