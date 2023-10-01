@@ -1,13 +1,13 @@
+"""
+Do not need to edit the functions provided in this file. You may functions.
+"""
+
 from __future__ import annotations
 
 import random
 import re
-from enum import Enum
 from pathlib import Path
 from typing import Any
-
-from structures.m_extensible_list import ExtensibleList
-from structures.m_map import Map
 
 
 class Node:
@@ -139,7 +139,7 @@ class Graph:
     def get_node(self, index: int) -> Node | None:
         try:
             return self._nodes[index]
-        except:
+        except IndexError:
             return None
 
     def get_neighbours(self, index: int) -> list[Node] | list[tuple[Node, int]]:
@@ -167,8 +167,8 @@ class Graph:
         adjacency = [[] for _ in range(len(contents))]
         weighted = False
         weighted_set = False
-        for l in contents:
-            chunks = l.strip().split(":")
+        for line in contents:
+            chunks = line.strip().split(":")
             if len(chunks) == 1:
                 continue
             if len(chunks) > 2:
@@ -215,18 +215,10 @@ class LatticeGraph(Graph):
         edges = None
 
         if nodes is not None:
+            nodes.sort(key=lambda x: x.get_id())
             self._rows = max([node.get_coordinates()[0] + 1 for node in nodes])
             self._cols = max([node.get_coordinates()[1] + 1 for node in nodes])
-            id_map = {
-                n.id_from_coordinates(self._rows): ix for ix, n in enumerate(nodes)
-            }
-            edges = [
-                [
-                    id_map[adj.id_from_coordinates(self._rows)]
-                    for adj in node.get_adjacent()
-                ]
-                for node in nodes
-            ]
+            edges = [[adj.get_id() for adj in node.get_adjacent()] for node in nodes]
 
         super().__init__(nodes, edges, weighted=False)
 
@@ -265,10 +257,10 @@ class LatticeGraph(Graph):
                 elem = lines[row][col]
                 # If it's not a wall, check neighbors
                 if elem != "%":
-                    l = LatticeNode(row, col, next_id)
+                    line = LatticeNode(row, col, next_id)
                     # Put the node into a dictionary, with the key as its
                     # current x/y coordinate as a string: x_y
-                    node_dict[str(row) + "_" + str(col)] = l
+                    node_dict[str(row) + "_" + str(col)] = line
                     next_id += 1
 
         # Second pass: Link the nodes together
@@ -282,19 +274,19 @@ class LatticeGraph(Graph):
             # Terrible, but it works eh?
             try:
                 value._north = node_dict[north_key]
-            except:
+            except KeyError:
                 pass
             try:
                 value._east = node_dict[east_key]
-            except:
+            except KeyError:
                 pass
             try:
                 value._south = node_dict[south_key]
-            except:
+            except KeyError:
                 pass
             try:
                 value._west = node_dict[west_key]
-            except:
+            except KeyError:
                 pass
 
         # Now finish setting up the data

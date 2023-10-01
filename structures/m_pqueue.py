@@ -32,6 +32,16 @@ class PriorityQueue:
         # IMPLEMENT ME!
         pass
 
+    def insert_fifo(self, data: Any) -> None:
+        """
+        UPDATE in Skeleton v2.2: Allows a user to add data for FIFO queue
+        operations. You may assume a user will NOT mix insert() and
+        insert_fifo() - they will either use one all of the time, or the
+        other all of the time.
+        """
+        # IMPLEMENT ME!
+        pass
+
     def get_min(self) -> Any:
         """
         Return the highest priority value from the queue, but do not remove it

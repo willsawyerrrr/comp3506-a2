@@ -1,7 +1,8 @@
+from abc import ABC, abstractmethod
 from enum import Enum
 
 
-class Hashable:
+class Hashable(ABC):
     """
     A special object that can be inherited to enforce objects to be hashable
     """
@@ -13,6 +14,7 @@ class Hashable:
         """
         pass
 
+    @abstractmethod
     def get_hash(self) -> int:
         """
         Return an integer hash of the given object. You MUST use this

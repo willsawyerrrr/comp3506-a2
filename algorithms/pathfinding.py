@@ -1,10 +1,10 @@
-from structures.m_entry import *
-from structures.m_extensible_list import *
-from structures.m_graph import *
-from structures.m_map import *
-from structures.m_pqueue import *
-from structures.m_stack import *
-from structures.m_util import *
+from structures.m_entry import Entry
+from structures.m_extensible_list import ExtensibleList
+from structures.m_graph import Graph, LatticeGraph
+from structures.m_map import Map
+from structures.m_pqueue import PriorityQueue
+from structures.m_stack import Stack
+from structures.m_util import Hashable, TraversalFailure
 
 
 def dfs_traversal(
@@ -35,7 +35,7 @@ def dfs_traversal(
     # If everything worked, you should return like this
     return (path, visited_order)
     # If you couldn't get to the goal, you should return like this
-    return (TraversalFailure.DISCONNECTED, visited)
+    return (TraversalFailure.DISCONNECTED, visited_order)
 
 
 def bfs_traversal(
@@ -66,7 +66,7 @@ def bfs_traversal(
     # If everything worked, you should return like this
     return (path, visited_order)
     # If you couldn't get to the goal, you should return like this
-    return (TraversalFailure.DISCONNECTED, visited)
+    return (TraversalFailure.DISCONNECTED, visited_order)
 
 
 def greedy_traversal(
