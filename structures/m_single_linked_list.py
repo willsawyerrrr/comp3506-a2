@@ -1,31 +1,33 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Generic, Optional, TypeVar
+
+Datum = TypeVar("Datum")
 
 
-class SingleNode:
+class SingleNode(Generic[Datum]):
     """
     A simple type to hold data and a next pointer
     """
 
-    def __init__(self, data: Any) -> None:
-        self._data = data  # This is the payload data of the node
-        self._next = None  # This is the "next" pointer to the next SingleNode
+    def __init__(self, data: Datum) -> None:
+        self._data = data
+        self._next = None
 
-    def set_data(self, data: Any) -> None:
+    def set_data(self, data: Datum) -> None:
         self._data = data
 
-    def get_data(self) -> Any:
+    def get_data(self) -> Datum:
         return self._data
 
-    def set_next(self, node: SingleNode) -> None:
+    def set_next(self, node: SingleNode[Datum]) -> None:
         self._next = node
 
-    def get_next(self) -> SingleNode | None:
+    def get_next(self) -> Optional[SingleNode[Datum]]:
         return self._next
 
 
-class SingleLinkedList:
+class SingleLinkedList(Generic[Datum]):
     """
     Singly linked list. You may update it if you like.
     """
@@ -53,13 +55,13 @@ class SingleLinkedList:
     def set_size(self, s: int) -> None:
         self._size = s
 
-    def get_head(self) -> SingleNode | None:
+    def get_head(self) -> Optional[SingleNode[Datum]]:
         return self._head
 
-    def set_head(self, node: SingleNode) -> None:
+    def set_head(self, node: SingleNode[Datum]) -> None:
         self._head = node
 
-    def insert_to_front(self, node: SingleNode) -> None:
+    def insert_to_front(self, node: SingleNode[Datum]) -> None:
         """
         Insert a node to the front of the list
         """
@@ -68,7 +70,7 @@ class SingleLinkedList:
         self._head = node
         self._size += 1
 
-    def insert_to_back(self, node: SingleNode) -> None:
+    def insert_to_back(self, node: SingleNode[Datum]) -> None:
         """
         Insert a node to the back of the list
         """
@@ -85,7 +87,7 @@ class SingleLinkedList:
         cur.set_next(node)
         self._size += 1
 
-    def remove_from_front(self) -> SingleNode | None:
+    def remove_from_front(self) -> Optional[SingleNode[Datum]]:
         """
         Remove and return the front element
         """
@@ -96,7 +98,7 @@ class SingleLinkedList:
         self._size -= 1
         return node
 
-    def remove_from_back(self) -> SingleNode | None:
+    def remove_from_back(self) -> Optional[SingleNode[Datum]]:
         """
         Remove and return the back element
         """
@@ -121,7 +123,7 @@ class SingleLinkedList:
         self._size -= 1
         return cur
 
-    def find_element(self, elem: Any) -> Any | None:
+    def find_element(self, elem: Datum) -> Optional[Datum]:
         """
         Looks at the data inside each node of the list and returns the
         node if it matches the input elem; returns None otherwise
@@ -133,7 +135,7 @@ class SingleLinkedList:
             cur = cur.get_next()
         return None
 
-    def find_and_remove_element(self, elem: Any) -> Any | None:
+    def find_and_remove_element(self, elem: Datum) -> Optional[Datum]:
         """
         Finds, removes, and returns the first instance of elem
         (based on the node data) or returns None if the element is not found.

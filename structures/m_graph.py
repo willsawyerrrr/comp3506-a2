@@ -7,23 +7,31 @@ from __future__ import annotations
 import random
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Generic, Optional, TypeVar
+
+Datum = TypeVar("Datum")
+
+Weight = int
+Unweighted = Any
+Weighted = tuple[Unweighted, Weight]
+
+MaybeWeighted = Unweighted | Weighted
 
 
-class Node:
+class Node(Generic[Datum]):
     """
     A graph node type. Stores an integer ID which maps the Node to its index
     in the adjacency list. Also can store abitrary data (labels).
     """
 
-    def __init__(self, nid: int, data: Any = None) -> None:
+    def __init__(self, nid: int, data: Optional[Datum] = None) -> None:
         self._id = nid
         self._data = data
 
     def get_id(self) -> int:
         return self._id
 
-    def get_data(self) -> Any:
+    def get_data(self) -> Datum:
         return self._data
 
 
@@ -38,7 +46,7 @@ class LatticeNode(Node):
         row: int,
         col: int,
         nid: int,
-        data: Any = None,
+        data: Datum = None,
         north: LatticeNode = None,
         east: LatticeNode = None,
         south: LatticeNode = None,
@@ -59,16 +67,16 @@ class LatticeNode(Node):
         return self._row, self._col
 
     # Following functions return the specific {N,E,S,W} neighbors
-    def get_north(self) -> LatticeNode | None:
+    def get_north(self) -> Optional[LatticeNode]:
         return self._north
 
-    def get_east(self) -> LatticeNode | None:
+    def get_east(self) -> Optional[LatticeNode]:
         return self._east
 
-    def get_south(self) -> LatticeNode | None:
+    def get_south(self) -> Optional[LatticeNode]:
         return self._south
 
-    def get_west(self) -> LatticeNode | None:
+    def get_west(self) -> Optional[LatticeNode]:
         return self._west
 
     def get_adjacent(self) -> list[LatticeNode]:
@@ -111,11 +119,11 @@ class LatticeNode(Node):
             self._west = None
 
 
-class Graph:
+class Graph(Generic[Datum]):
     def __init__(
         self,
-        nodes: list[Node] | None = None,
-        edges: list[list[int]] | list[list[tuple[int, int]]] | None = None,
+        nodes: Optional[list[Node[Datum]]] = None,
+        edges: Optional[list[MaybeWeighted[int]]] = None,
         weighted: bool = True,
     ):
         self._nodes = nodes if nodes is not None else []
@@ -136,13 +144,13 @@ class Graph:
                         f"No node has ID {neighbour} but adjacency list refers to it."
                     )
 
-    def get_node(self, index: int) -> Node | None:
+    def get_node(self, index: int) -> Optional[Node[Datum]]:
         try:
             return self._nodes[index]
         except IndexError:
             return None
 
-    def get_neighbours(self, index: int) -> list[Node] | list[tuple[Node, int]]:
+    def get_neighbours(self, index: int) -> list[MaybeWeighted[Node[Datum]]]:
         if self._weighted:
             return [
                 (self._nodes[neighbour], weight)
@@ -151,7 +159,7 @@ class Graph:
         else:
             return [self._nodes[neighbour] for neighbour, _ in self._edges[index]]
 
-    def generate_random_node_id(self) -> int | None:
+    def generate_random_node_id(self) -> Optional[int]:
         """
         Return a random node identifier from the graph or None if empty.
         """
@@ -208,8 +216,8 @@ class Graph:
             ofile.write("\n".join(lines))
 
 
-class LatticeGraph(Graph):
-    def __init__(self, nodes: list[LatticeNode] = None) -> None:
+class LatticeGraph(Graph[Datum]):
+    def __init__(self, nodes: list[LatticeNode[Datum]] = None) -> None:
         self._rows = 0
         self._cols = 0
         edges = None
@@ -226,7 +234,7 @@ class LatticeGraph(Graph):
         return self._rows, self._cols
 
     # LatticeNode specific version of get_neighbours
-    def get_neighbours(self, index: int) -> list[LatticeNode]:
+    def get_neighbours(self, index: int) -> list[LatticeNode[Datum]]:
         return self._nodes[index].get_adjacent()
 
     def from_file(self, path: str) -> None:

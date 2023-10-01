@@ -1,3 +1,5 @@
+from typing import TypeVar
+
 from structures.m_entry import Entry
 from structures.m_extensible_list import ExtensibleList
 from structures.m_graph import Graph, LatticeGraph
@@ -6,9 +8,11 @@ from structures.m_pqueue import PriorityQueue
 from structures.m_stack import Stack
 from structures.m_util import Hashable, TraversalFailure
 
+Datum = TypeVar("Datum")
+
 
 def dfs_traversal(
-    graph: Graph | LatticeGraph, origin: int, goal: int
+    graph: Graph[Datum] | LatticeGraph[Datum], origin: int, goal: int
 ) -> tuple[ExtensibleList, ExtensibleList] | tuple[TraversalFailure, ExtensibleList]:
     """
     Task 2.1: Depth First Search
@@ -39,7 +43,7 @@ def dfs_traversal(
 
 
 def bfs_traversal(
-    graph: Graph | LatticeGraph, origin: int, goal: int
+    graph: Graph[Datum] | LatticeGraph[Datum], origin: int, goal: int
 ) -> tuple[ExtensibleList, ExtensibleList] | tuple[TraversalFailure, ExtensibleList]:
     """
     Task 2.1: Breadth First Search
@@ -70,7 +74,7 @@ def bfs_traversal(
 
 
 def greedy_traversal(
-    graph: LatticeGraph, origin: int, goal: int
+    graph: LatticeGraph[Datum], origin: int, goal: int
 ) -> tuple[ExtensibleList, ExtensibleList] | tuple[TraversalFailure, ExtensibleList]:
     """
     Task 2.2: Greedy Traversal
@@ -102,7 +106,7 @@ def distance(x_1: float, y_1: float, x_2: float, y_2: float) -> float:
 
 
 def max_traversal(
-    graph: LatticeGraph, origin: int, goal: int
+    graph: LatticeGraph[Datum], origin: int, goal: int
 ) -> tuple[ExtensibleList, ExtensibleList] | tuple[TraversalFailure, ExtensibleList]:
     """
     Task 2.3: Maximize vertex visits traversal

@@ -1,9 +1,11 @@
-from typing import Any
+from typing import Generic, TypeVar
 
 from structures.m_entry import *
 
+Datum = TypeVar("Datum")
 
-class PriorityQueue:
+
+class PriorityQueue(Generic[Datum]):
     """
     An implementation of the PriorityQueue ADT.
     The provided methods consume keys and values. Keys are called "priorities"
@@ -23,7 +25,7 @@ class PriorityQueue:
 
     # Warning: This insert() signature changed as of skeleton 1.1, previously
     # the priority and data arguments were switched
-    def insert(self, priority: int, data: Any) -> None:
+    def insert(self, priority: int, data: Datum) -> None:
         """
         Insert some data to the queue with a given priority.
         Hint: FIFO queue can just always have the same priority value, no
@@ -32,7 +34,7 @@ class PriorityQueue:
         # IMPLEMENT ME!
         pass
 
-    def insert_fifo(self, data: Any) -> None:
+    def insert_fifo(self, data: Datum) -> None:
         """
         UPDATE in Skeleton v2.2: Allows a user to add data for FIFO queue
         operations. You may assume a user will NOT mix insert() and
@@ -42,14 +44,14 @@ class PriorityQueue:
         # IMPLEMENT ME!
         pass
 
-    def get_min(self) -> Any:
+    def get_min(self) -> Datum:
         """
         Return the highest priority value from the queue, but do not remove it
         """
         # IMPLEMENT ME!
         pass
 
-    def remove_min(self) -> Any:
+    def remove_min(self) -> Datum:
         """
         Extract (remove) the highest priority value from the queue.
         You must then maintain the queue to ensure priority order.

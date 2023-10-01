@@ -1,13 +1,4 @@
 """
-COMP3506/7505 S2 2023
-The University of Queensland
-
-NOTE: This file will be used for marking.
-
-Please read the following carefully. This file is used to implement a Map
-class which supports efficient insertions, accesses, and deletions of
-elements.
-
 There is an Entry type defined in m_entry.py which *must* be used in your
 map interface. The Entry is a very simple class that stores keys and values.
 The special reason we make you use Entry types is because Entry extends the
@@ -19,12 +10,15 @@ Note that if you opt to not use hashing, then you can simply override the
 get_hash function to return -1 for example.
 """
 
-from typing import Any
+from typing import Generic, Optional, TypeVar
 
 from structures.m_entry import Entry
 
+Key = TypeVar("Key")
+Value = TypeVar("Value")
 
-class Map:
+
+class Map(Generic[Key, Value]):
     """
     An implementation of the Map ADT.
     The provided methods consume keys and values via the Entry type.
@@ -39,7 +33,7 @@ class Map:
         # IMPLEMENT ME!
         pass
 
-    def insert(self, entry: Entry) -> Any | None:
+    def insert(self, entry: Entry[Key, Value]) -> Optional[Value]:
         """
         Associate value v with key k for efficient lookups. You may wish
         to return the old value if k is already inside the map after updating
@@ -48,7 +42,7 @@ class Map:
         # IMPLEMENT ME!
         pass
 
-    def insert_kv(self, key: Any, value: Any) -> Any | None:
+    def insert_kv(self, key: Key, value: Value) -> Optional[Value]:
         """
         A version of insert which wraps a given key/value in an Entry type.
         Handy if you wish to provide keys and values directly to the insert
@@ -58,7 +52,7 @@ class Map:
         entry = Entry(key, value)
         return self.insert(entry)
 
-    def __setitem__(self, key: Any, value: Any) -> None:
+    def __setitem__(self, key: Key, value: Value) -> None:
         """
         For convenience, you may wish to use this as an alternative
         for insert as well. However, this version does _not_ return
@@ -68,7 +62,7 @@ class Map:
         self.insert(entry)
         pass
 
-    def remove(self, key: Any) -> None:
+    def remove(self, key: Key) -> None:
         """
         Remove the key/value pair corresponding to key k from the
         data structure. Don't return anything.
@@ -78,7 +72,7 @@ class Map:
         # IMPLEMENT ME!
         pass
 
-    def find(self, key: Any) -> Any | None:
+    def find(self, key: Key) -> Optional[Value]:
         """
         Find and return the value v corresponding to key k if it
         exists; return None otherwise.
@@ -88,7 +82,7 @@ class Map:
         # IMPLEMENT ME!
         pass
 
-    def __getitem__(self, key: Any) -> Any | None:
+    def __getitem__(self, key: Key) -> Optional[Value]:
         """
         For convenience, you may wish to use this as an alternative
         for find()

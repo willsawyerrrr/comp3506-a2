@@ -1,15 +1,18 @@
-from typing import Any
+from typing import Generic, TypeVar
 
 from structures.m_util import Hashable
 
+Key = TypeVar("Key")
+Value = TypeVar("Value")
 
-class Entry(Hashable):
+
+class Entry(Hashable, Generic[Key, Value]):
     """
     Implements a simple type that holds keys and values. Extends the Hashable
     type to ensure get_hash() is available/used for arbitrary key types.
     """
 
-    def __init__(self, key: Any, value: Any) -> None:
+    def __init__(self, key: Key, value: Value) -> None:
         """
         An entry has a key (used for comparing to other entries or for hashing)
         and a corresponding value which represents some arbitrary data associated
@@ -18,16 +21,16 @@ class Entry(Hashable):
         self._key = key
         self._value = value
 
-    def get_key(self) -> Any:
+    def get_key(self) -> Key:
         return self._key
 
-    def get_value(self) -> Any:
+    def get_value(self) -> Value:
         return self._value
 
-    def update_key(self, nk: Any) -> None:
+    def update_key(self, nk: Key) -> None:
         self._key = nk
 
-    def update_value(self, nv: Any) -> None:
+    def update_value(self, nv: Value) -> None:
         self._value = nv
 
     def __eq__(self, other) -> bool:
@@ -56,7 +59,7 @@ class Entry(Hashable):
     # You may add helpers/additional functionality below if you wish
 
 
-class Destination(Entry):
+class Destination(Entry[Key, Value]):
     """
     A special type of entry that tracks the monetary and stopover costs of
     a trip from some origin to a destination. You can use _value however
@@ -64,7 +67,7 @@ class Destination(Entry):
     """
 
     def __init__(
-        self, key: Any, value: Any, cost_money: int, cost_stopover: int
+        self, key: Key, value: Value, cost_money: int, cost_stopover: int
     ) -> None:
         super().__init__(key, value)
         self._cost_m = cost_money

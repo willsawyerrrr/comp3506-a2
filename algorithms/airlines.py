@@ -1,3 +1,5 @@
+from typing import TypeVar
+
 from structures.m_entry import Entry
 from structures.m_extensible_list import ExtensibleList
 from structures.m_graph import Graph
@@ -6,8 +8,10 @@ from structures.m_pqueue import PriorityQueue
 from structures.m_stack import Stack
 from structures.m_util import Hashable, TraversalFailure
 
+Datum = TypeVar("Datum")
 
-def has_cycles(graph: Graph) -> bool:
+
+def has_cycles(graph: Graph[Datum]) -> bool:
     """
     Task 3.1: Cycle detection
 
@@ -21,7 +25,7 @@ def has_cycles(graph: Graph) -> bool:
     pass
 
 
-def enumerate_hubs(graph: Graph, min_degree: int) -> ExtensibleList:
+def enumerate_hubs(graph: Graph[Datum], min_degree: int) -> ExtensibleList:
     """
     Task 3.2: Hub enumeration
 
@@ -39,7 +43,7 @@ def enumerate_hubs(graph: Graph, min_degree: int) -> ExtensibleList:
 
 
 def calculate_flight_budget(
-    graph: Graph, origin: int, stopover_budget: int, monetary_budget: int
+    graph: Graph[Datum], origin: int, stopover_budget: int, monetary_budget: int
 ) -> ExtensibleList:
     """
     Task 3.3: Big Bogan Budget Bonanza
@@ -61,7 +65,7 @@ def calculate_flight_budget(
     pass
 
 
-def maintenance_optimisation(graph: Graph, origin: int) -> ExtensibleList:
+def maintenance_optimisation(graph: Graph[Datum], origin: int) -> ExtensibleList:
     """
     Task 3.4: BA Field Maintenance Optimisation
 
@@ -78,7 +82,7 @@ def maintenance_optimisation(graph: Graph, origin: int) -> ExtensibleList:
     pass
 
 
-def all_city_logistics(graph: Graph) -> Map:
+def all_city_logistics(graph: Graph[Datum]) -> Map:
     """
     Task 3.5: All City Logistics
 

@@ -1,9 +1,11 @@
-from typing import Any
+from typing import Generic, Optional, TypeVar
 
 from structures.m_extensible_list import ExtensibleList
 
+Datum = TypeVar("Datum")
 
-class Stack:
+
+class Stack(Generic[Datum]):
     """
     A simple composition-based stack backed by an ExtensibleList
     """
@@ -11,13 +13,13 @@ class Stack:
     def __init__(self) -> None:
         self._data = ExtensibleList()
 
-    def push(self, elem: Any) -> None:
+    def push(self, elem: Datum) -> None:
         """
         Push some data `elem` onto the stack
         """
         self._data.append(elem)
 
-    def pop(self) -> Any | None:
+    def pop(self) -> Optional[Datum]:
         """
         Remove and return the top element or None if empty
         """
@@ -27,7 +29,7 @@ class Stack:
         value = self._data.remove_at(index)
         return value
 
-    def peek(self) -> Any | None:
+    def peek(self) -> Optional[Datum]:
         """
         Return the top element but do not remove it
         """

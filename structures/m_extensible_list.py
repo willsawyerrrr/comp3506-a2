@@ -1,7 +1,9 @@
-from typing import Any
+from typing import Generic, Optional, TypeVar
+
+Datum = TypeVar("Datum")
 
 
-class ExtensibleList:
+class ExtensibleList(Generic[Datum]):
     def __init__(self) -> None:
         """
         Construct the list with 4 None elements to begin with.
@@ -45,7 +47,7 @@ class ExtensibleList:
         """
         self.__init__()
 
-    def get_at(self, index: int) -> Any | None:
+    def get_at(self, index: int) -> Optional[Datum]:
         """
         Bounds checked access
         """
@@ -53,14 +55,14 @@ class ExtensibleList:
             return self._data[index]
         return None
 
-    def __getitem__(self, index: int) -> Any | None:
+    def __getitem__(self, index: int) -> Optional[Datum]:
         """
         Bounds checked access (was not bounds checked in A1)
         An alias for get_at
         """
         return self.get_at(index)
 
-    def set_at(self, index: int, element: Any) -> None:
+    def set_at(self, index: int, element: Datum) -> None:
         """
         Allows an item to be overwritten if it is within the current logical
         "not None" part of the list, that is, [0, self._size - 1]
@@ -68,13 +70,13 @@ class ExtensibleList:
         if index >= 0 and index < self._size:
             self._data[index] = element
 
-    def __setitem__(self, index: int, element: Any) -> None:
+    def __setitem__(self, index: int, element: Datum) -> None:
         """
         An alias to set_at
         """
         self.set_at(index, element)
 
-    def append(self, element: Any) -> None:
+    def append(self, element: Datum) -> None:
         """
         Add an element to the end of the list (after the last existing element)
         """
@@ -83,7 +85,7 @@ class ExtensibleList:
         self._data[self._size] = element
         self._size += 1
 
-    def remove(self, element: Any) -> None:
+    def remove(self, element: Datum) -> None:
         """
         Find and remove the first instance of element, clean up the list
         """
@@ -103,7 +105,7 @@ class ExtensibleList:
             self._data[self._size - 1] = None
             self._size -= 1
 
-    def remove_at(self, index: int) -> Any | None:
+    def remove_at(self, index: int) -> Optional[Datum]:
         """
         Remove and return the element at a given index, checking bounds.
         Return None if bounds are bad.
