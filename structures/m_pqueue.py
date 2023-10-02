@@ -2,6 +2,7 @@ from typing import Generic, TypeVar
 
 from structures.m_entry import Destination, Entry
 from structures.m_extensible_list import ExtensibleList
+from structures.m_util import binary_search
 
 Datum = TypeVar("Datum")
 
@@ -26,12 +27,10 @@ class PriorityQueue(Generic[Datum]):
         """
         Insert some data to the queue with a given priority.
         """
-        for i in range(self._entries.get_size()):
-            if self._entries[i].get_key() > priority:
-                self._entries.insert_at(i, Entry(priority, data))
-                return
-
-        self._entries.append(Entry(priority, data))
+        index = binary_search(
+            self._entries, Entry(priority, data), 0, self._entries.get_size() - 1
+        )
+        self._entries.insert_at(index, Entry(priority, data))
 
     def insert_fifo(self, data: Datum) -> None:
         """

@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+from typing import TypeVar
+
+T = TypeVar("T")
 
 
 class Hashable(ABC):
@@ -41,6 +44,18 @@ class TraversalFailure(Enum):
     """
 
 
-"""
-Any other utilities can go below here.
-"""
+def binary_search(items: list[T], target: T, low: int, high: int) -> int:
+    """
+    Returns the index of the smallest element greater than or equal to target in items.
+    """
+    if low > high:
+        return low
+
+    mid = (low + high) // 2
+
+    if items[mid] == target:
+        return mid
+    elif items[mid] > target:
+        return binary_search(items, target, low, mid - 1)
+    else:
+        return binary_search(items, target, mid + 1, high)
