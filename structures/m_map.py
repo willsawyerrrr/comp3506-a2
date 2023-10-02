@@ -60,7 +60,6 @@ class Map(Generic[Key, Value]):
         """
         entry = Entry(key, value)
         self.insert(entry)
-        pass
 
     def remove(self, key: Key) -> None:
         """
