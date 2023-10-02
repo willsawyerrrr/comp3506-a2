@@ -7,7 +7,7 @@ Datum = TypeVar("Datum")
 
 class Stack(Generic[Datum]):
     """
-    A simple composition-based stack backed by an ExtensibleList
+    A simple composition-based stack backed by an ExtensibleList.
     """
 
     def __init__(self) -> None:
@@ -15,13 +15,13 @@ class Stack(Generic[Datum]):
 
     def push(self, elem: Datum) -> None:
         """
-        Push some data `elem` onto the stack
+        Push some data `elem` onto the stack.
         """
         self._data.append(elem)
 
     def pop(self) -> Optional[Datum]:
         """
-        Remove and return the top element or None if empty
+        Remove and return the top element or None if empty.
         """
         if self._data.is_empty():
             return None
@@ -31,7 +31,7 @@ class Stack(Generic[Datum]):
 
     def peek(self) -> Optional[Datum]:
         """
-        Return the top element but do not remove it
+        Return the top element but do not remove it.
         """
         index = self._data.get_size() - 1
         # get_at handles indexes being out of bounds

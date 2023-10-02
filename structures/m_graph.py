@@ -1,5 +1,5 @@
 """
-Do not need to edit the functions provided in this file. You may functions.
+Do not need to edit the functions provided in this file. You may write new functions.
 """
 
 from __future__ import annotations
@@ -20,8 +20,8 @@ MaybeWeighted = Unweighted | Weighted
 
 class Node(Generic[Datum]):
     """
-    A graph node type. Stores an integer ID which maps the Node to its index
-    in the adjacency list. Also can store abitrary data (labels).
+    A graph node type. Stores an integer ID which maps the Node to its index in the
+    adjacency list. Also can store abitrary data (labels).
     """
 
     def __init__(self, nid: int, data: Optional[Datum] = None) -> None:
@@ -37,8 +37,7 @@ class Node(Generic[Datum]):
 
 class LatticeNode(Node):
     """
-    A special lattice type; has four possible neighbors, as well as x and y
-    coordinates.
+    A special lattice type; has four possible neighbors, as well as x and y coordinates.
     """
 
     def __init__(
@@ -62,7 +61,7 @@ class LatticeNode(Node):
 
     def get_coordinates(self) -> tuple[int, int]:
         """
-        Returns the (x, y) coordinates of the node
+        Returns the (x, y) coordinates of the node.
         """
         return self._row, self._col
 
@@ -81,7 +80,7 @@ class LatticeNode(Node):
 
     def get_adjacent(self) -> list[LatticeNode]:
         """
-        Return a list of adjacent nodes to self
+        Return a list of adjacent nodes to self.
         """
         adjacent = []
         if self.get_north() is not None:

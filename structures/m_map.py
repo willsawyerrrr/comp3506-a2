@@ -25,15 +25,13 @@ BUCKET_COUNT: int = 10
 
 class Map(Generic[Key, Value]):
     """
-    An implementation of the Map ADT.
-    The provided methods consume keys and values via the Entry type.
+    An implementation of the Map ADT. The provided methods consume keys and values via
+    the Entry type.
     """
 
     def __init__(self) -> None:
         """
         Construct the map.
-        You are free to make any changes you find suitable in this function
-        to initialise your map.
         """
         self.buckets: list[Optional[SingleLinkedList[Entry[Key, Value]]]] = [
             None
@@ -42,9 +40,8 @@ class Map(Generic[Key, Value]):
 
     def insert(self, entry: Entry[Key, Value]) -> Optional[Value]:
         """
-        Associate value v with key k for efficient lookups. You may wish
-        to return the old value if k is already inside the map after updating
-        to the new value v.
+        Associate value v with key k for efficient lookups. Returns the old value if k
+        is already inside the map after updating to the new value v.
         """
         bucket = self.compression_function(entry.get_hash())
 
@@ -64,26 +61,21 @@ class Map(Generic[Key, Value]):
     def insert_kv(self, key: Key, value: Value) -> Optional[Value]:
         """
         A version of insert which wraps a given key/value in an Entry type.
-        Handy if you wish to provide keys and values directly to the insert
-        function. It will return the value returned by insert, so keep this
-        in mind.
         """
         entry = Entry(key, value)
         return self.insert(entry)
 
     def __setitem__(self, key: Key, value: Value) -> None:
         """
-        For convenience, you may wish to use this as an alternative
-        for insert as well. However, this version does _not_ return
-        anything. Can be used like: my_map[some_key] = some_value
+        Alternative for insert. However, this version does not return anything.
         """
         entry = Entry(key, value)
         self.insert(entry)
 
     def remove(self, key: Key) -> None:
         """
-        Remove the key/value pair corresponding to key k from the
-        data structure. Don't return anything.
+        Remove the key/value pair corresponding to key k from the data structure.
+        Don't return anything.
         """
         if (value := self.find(key)) is None:
             return
@@ -93,8 +85,8 @@ class Map(Generic[Key, Value]):
 
     def find(self, key: Key) -> Optional[Value]:
         """
-        Find and return the value v corresponding to key k if it
-        exists; return None otherwise.
+        Find and return the value v corresponding to key k if it exists; return None
+        otherwise.
         """
         bucket = self.compression_function(key.get_hash())
 
@@ -109,12 +101,14 @@ class Map(Generic[Key, Value]):
 
     def __getitem__(self, key: Key) -> Optional[Value]:
         """
-        For convenience, you may wish to use this as an alternative
-        for find()
+        Alternative for find.
         """
         return self.find(key)
 
     def get_size(self) -> int:
+        """
+        Returns the number of entries in the map.
+        """
         size = 0
         for i in range(BUCKET_COUNT):
             bucket = self.buckets[i]
@@ -123,6 +117,9 @@ class Map(Generic[Key, Value]):
         return size
 
     def is_empty(self) -> bool:
+        """
+        Returns whether the map contains no entries.
+        """
         for i in range(BUCKET_COUNT):
             bucket = self.buckets[i]
             if bucket is not None and bucket.get_size() != 0:

@@ -33,7 +33,7 @@ class ExtensibleList(Generic[Datum]):
 
     def __resize(self) -> None:
         """
-        Use a doubling strategy for amortized constant time ops
+        Use a doubling strategy for amortized constant time operations.
         """
         self._capacity *= 2
         new_list = [None] * self._capacity
@@ -45,13 +45,13 @@ class ExtensibleList(Generic[Datum]):
 
     def reset(self) -> None:
         """
-        Kill the list
+        Kill the list.
         """
         self.__init__()
 
     def get_at(self, index: int) -> Optional[Datum]:
         """
-        Bounds checked access
+        Bounds checked access.
         """
         if index >= 0 and index < self._size:
             return self._data[index]
@@ -59,28 +59,27 @@ class ExtensibleList(Generic[Datum]):
 
     def __getitem__(self, index: int) -> Optional[Datum]:
         """
-        Bounds checked access (was not bounds checked in A1)
-        An alias for get_at
+        Alternative for get_at.
         """
         return self.get_at(index)
 
     def set_at(self, index: int, element: Datum) -> None:
         """
-        Allows an item to be overwritten if it is within the current logical
-        "not None" part of the list, that is, [0, self._size - 1]
+        Allows an item to be overwritten if it is within the current logical "not None"
+        part of the list, that is, [0, self._size - 1].
         """
         if index >= 0 and index < self._size:
             self._data[index] = element
 
     def __setitem__(self, index: int, element: Datum) -> None:
         """
-        An alias to set_at
+        Alternative for set_at.
         """
         self.set_at(index, element)
 
     def append(self, element: Datum) -> None:
         """
-        Add an element to the end of the list (after the last existing element)
+        Add an element to the end of the list (after the last existing element).
         """
         if self._capacity == self._size:
             self.__resize()
@@ -104,7 +103,7 @@ class ExtensibleList(Generic[Datum]):
 
     def remove(self, element: Datum) -> None:
         """
-        Find and remove the first instance of element, clean up the list
+        Find and remove the first instance of element, clean up the list.
         """
         found_idx = -1
         for i in range(self._size):
@@ -124,8 +123,8 @@ class ExtensibleList(Generic[Datum]):
 
     def remove_at(self, index: int) -> Optional[Datum]:
         """
-        Remove and return the element at a given index, checking bounds.
-        Return None if bounds are bad.
+        Remove and return the element at a given index, checking bounds. Return None if
+        bounds are bad.
         """
         elem = None
         # If the index is valid

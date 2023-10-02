@@ -8,12 +8,11 @@ Datum = TypeVar("Datum")
 
 class PriorityQueue(Generic[Datum]):
     """
-    An implementation of the PriorityQueue ADT.
-    The provided methods consume keys and values. Keys are called "priorities"
-    and should be integers in the range [0, n] with 0 being the highest priority.
-    Values are called "data" and store the payload data of interest.
-    For convenience, you may wish to also implement the functionality provided in
-    terms of the Entry type, but this is up to you.
+    An implementation of the PriorityQueue ADT. The provided methods consume keys and
+    values. Keys are called "priorities" and should be integers in the range [0, n] with
+    0 being the highest priority. Values are called "data" and store the payload data of
+    interest. For convenience, you may wish to also implement the functionality provided
+    in terms of the Entry type, but this is up to you.
     """
 
     def __init__(self):
@@ -26,8 +25,6 @@ class PriorityQueue(Generic[Datum]):
     def insert(self, priority: int, data: Datum) -> None:
         """
         Insert some data to the queue with a given priority.
-        Hint: FIFO queue can just always have the same priority value, no
-        need to implement an extra function.
         """
         for i in range(self.entries.get_size()):
             if self.entries[i].priority > priority:
@@ -45,14 +42,13 @@ class PriorityQueue(Generic[Datum]):
 
     def get_min(self) -> Datum:
         """
-        Return the highest priority value from the queue, but do not remove it
+        Return the highest priority value from the queue, but do not remove it.
         """
         return self.entries.get_at(0).get_value()
 
     def remove_min(self) -> Datum:
         """
-        Extract (remove) the highest priority value from the queue.
-        You must then maintain the queue to ensure priority order.
+        Remove and return the highest priority value from the queue.
         """
         return self.entries.remove_at(0).get_value()
 

@@ -7,7 +7,7 @@ Datum = TypeVar("Datum")
 
 class SingleNode(Generic[Datum]):
     """
-    A simple type to hold data and a next pointer
+    A simple type to hold data and a next pointer.
     """
 
     def __init__(self, data: Datum) -> None:
@@ -29,7 +29,7 @@ class SingleNode(Generic[Datum]):
 
 class SingleLinkedList(Generic[Datum]):
     """
-    Singly linked list. You may update it if you like.
+    Singly linked list.
     """
 
     def __init__(self) -> None:
@@ -63,7 +63,7 @@ class SingleLinkedList(Generic[Datum]):
 
     def insert_to_front(self, node: SingleNode[Datum]) -> None:
         """
-        Insert a node to the front of the list
+        Insert a node to the front of the list.
         """
         if self._head is not None:
             node.set_next(self._head)
@@ -72,7 +72,7 @@ class SingleLinkedList(Generic[Datum]):
 
     def insert_to_back(self, node: SingleNode[Datum]) -> None:
         """
-        Insert a node to the back of the list
+        Insert a node to the back of the list.
         """
         cur = self.get_head()
         # Check corner case; the head is yet to be set
@@ -89,7 +89,7 @@ class SingleLinkedList(Generic[Datum]):
 
     def remove_from_front(self) -> Optional[SingleNode[Datum]]:
         """
-        Remove and return the front element
+        Remove and return the front element.
         """
         if self._size == 0:
             return None
@@ -100,7 +100,7 @@ class SingleLinkedList(Generic[Datum]):
 
     def remove_from_back(self) -> Optional[SingleNode[Datum]]:
         """
-        Remove and return the back element
+        Remove and return the back element.
         """
         # Nothing to remove
         if self._size == 0:
@@ -125,8 +125,8 @@ class SingleLinkedList(Generic[Datum]):
 
     def find_element(self, elem: Datum) -> Optional[Datum]:
         """
-        Looks at the data inside each node of the list and returns the
-        node if it matches the input elem; returns None otherwise
+        Looks at the data inside each node of the list and returns the node if it
+        matches the input elem; returns None otherwise.
         """
         cur = self.get_head()
         while cur is not None:
@@ -137,8 +137,8 @@ class SingleLinkedList(Generic[Datum]):
 
     def find_and_remove_element(self, elem: Datum) -> Optional[Datum]:
         """
-        Finds, removes, and returns the first instance of elem
-        (based on the node data) or returns None if the element is not found.
+        Finds, removes, and returns the first instance of elem (based on the node data)
+        or returns None if the element is not found.
         """
         prev = self.get_head()
         # Empty list - nothing to do
@@ -166,7 +166,7 @@ class SingleLinkedList(Generic[Datum]):
 
     def reverse(self) -> None:
         """
-        Reverses the linked list
+        Reverses the linked list.
         """
         if self.get_head() is None:
             return
