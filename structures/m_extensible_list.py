@@ -97,7 +97,7 @@ class ExtensibleList(Generic[Datum]):
             self.__resize()
 
         self._size += 1
-        for i in range(self._size, index, -1):
+        for i in range(self._size - 1, index, -1):
             self._data[i] = self._data[i - 1]
 
         self._data[index] = element
