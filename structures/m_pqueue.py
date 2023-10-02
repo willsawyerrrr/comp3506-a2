@@ -1,6 +1,6 @@
 from typing import Generic, TypeVar
 
-from structures.m_entry import *
+from structures.m_entry import Destination, Entry
 
 Datum = TypeVar("Datum")
 
