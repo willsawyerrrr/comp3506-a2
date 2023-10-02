@@ -86,10 +86,7 @@ class Map(Generic[Key, Value]):
         For convenience, you may wish to use this as an alternative
         for find()
         """
-        # You may or may not need this variable depending on your impl.
-        dummy_entry = Entry(key, None)  # Feel free to remove me...
-        # IMPLEMENT ME!
-        pass
+        return self.find(key)
 
     def get_size(self) -> int:
         # IMPLEMENT ME!
