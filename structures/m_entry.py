@@ -56,7 +56,8 @@ class Entry(Hashable, Generic[Key, Value]):
         report/statement file).
         """
 
-    # You may add helpers/additional functionality below if you wish
+    def __str__(self) -> str:
+        return f"({self._key} -> {self._value})"
 
 
 class Destination(Entry[Key, Value]):
