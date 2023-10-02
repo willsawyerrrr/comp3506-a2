@@ -63,5 +63,4 @@ class PriorityQueue(Generic[Datum]):
         return self.entries.get_size()
 
     def is_empty(self) -> bool:
-        # IMPLEMENT ME!
-        pass
+        return self.entries.is_empty()
