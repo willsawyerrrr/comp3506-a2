@@ -23,16 +23,18 @@ class PriorityQueue(Generic[Datum]):
         self.entries: ExtensibleList[Entry[int, Datum]] = ExtensibleList()
         self.fifo_priority = 0
 
-    # Warning: This insert() signature changed as of skeleton 1.1, previously
-    # the priority and data arguments were switched
     def insert(self, priority: int, data: Datum) -> None:
         """
         Insert some data to the queue with a given priority.
         Hint: FIFO queue can just always have the same priority value, no
         need to implement an extra function.
         """
-        # IMPLEMENT ME!
-        pass
+        for i in range(self.entries.get_size()):
+            if self.entries[i].priority > priority:
+                self.entries.insert_at(i, Entry(priority, data))
+                return
+
+        self.entries.append(Entry(priority, data))
 
     def insert_fifo(self, data: Datum) -> None:
         """
