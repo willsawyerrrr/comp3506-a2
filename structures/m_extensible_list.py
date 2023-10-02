@@ -166,7 +166,7 @@ class ExtensibleList(Generic[Datum]):
         """
         Sorts the list between indices left and right.
         """
-        if left >= right:
+        if left >= right - 1:
             return
 
         mid = (left + right) // 2
@@ -179,15 +179,15 @@ class ExtensibleList(Generic[Datum]):
         Given a list which is sorted from indices left to mid and indices mid to right,
         merges into the sorted union from indices left to right.
         """
-        n_1 = mid - left + 1
-        n_2 = right - mid
         left_half = self.copy(left, mid)
         right_half = self.copy(mid, right)
+        n_1 = left_half.get_size()
+        n_2 = right_half.get_size()
 
-        i, j, k = 0, 0, 1
+        i, j, k = 0, 0, left
 
         while i < n_1 and j < n_2:
-            if left_half[i] <= right_half[j]:
+            if left_half[i] < right_half[j]:
                 self[k] = left_half[i]
                 i += 1
             else:
