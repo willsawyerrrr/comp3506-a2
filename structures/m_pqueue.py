@@ -1,6 +1,7 @@
 from typing import Generic, TypeVar
 
 from structures.m_entry import Destination, Entry
+from structures.m_extensible_list import ExtensibleList
 
 Datum = TypeVar("Datum")
 
@@ -18,10 +19,9 @@ class PriorityQueue(Generic[Datum]):
     def __init__(self):
         """
         Construct the priority queue.
-        You are free to make any changes you find suitable in this function to initialise your pq.
         """
-        # IMPLEMENT ME!
-        pass
+        self.entries: ExtensibleList[Entry[int, Datum]] = ExtensibleList()
+        self.fifo_priority = 0
 
     # Warning: This insert() signature changed as of skeleton 1.1, previously
     # the priority and data arguments were switched
