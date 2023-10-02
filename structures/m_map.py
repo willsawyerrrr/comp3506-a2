@@ -35,7 +35,9 @@ class Map(Generic[Key, Value]):
         You are free to make any changes you find suitable in this function
         to initialise your map.
         """
-        self.buckets: list[SingleLinkedList[Entry[Key, Value]]] = [None] * NUM_BUCKETS
+        self.buckets: list[Optional[SingleLinkedList[Entry[Key, Value]]]] = [
+            None
+        ] * NUM_BUCKETS
         self.compression_function: Callable[[int], int] = lambda x: x % NUM_BUCKETS
 
     def insert(self, entry: Entry[Key, Value]) -> Optional[Value]:
@@ -117,5 +119,7 @@ class Map(Generic[Key, Value]):
         pass
 
     def is_empty(self) -> bool:
-        # IMPLEMENT ME!
-        pass
+        for i in range(NUM_BUCKETS):
+            bucket = self.buckets[i]
+            if bucket is not None and bucket.get_size() != 0:
+                return False
