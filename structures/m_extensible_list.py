@@ -85,6 +85,21 @@ class ExtensibleList(Generic[Datum]):
         self._data[self._size] = element
         self._size += 1
 
+    def insert_at(self, index: int, element: Datum) -> None:
+        """
+        Insert an element at the given index, checking bounds.
+        """
+        if index < 0 or index > self._size:
+            return
+
+        if self._capacity == self._size:
+            self.__resize()
+
+        for i in range(self._size, index, -1):
+            self._data[i] = self._data[i - 1]
+
+        self._data[index] = element
+
     def remove(self, element: Datum) -> None:
         """
         Find and remove the first instance of element, clean up the list
