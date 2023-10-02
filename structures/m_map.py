@@ -53,7 +53,7 @@ class Map(Generic[Key, Value]):
             existing = cur.get_data()
             if existing == entry:
                 old_value = existing.get_value()
-                existing.update_value(entry)
+                cur.set_data(entry)
                 return old_value
             cur = cur.get_next()
 
