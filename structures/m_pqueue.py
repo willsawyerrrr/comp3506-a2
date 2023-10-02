@@ -27,7 +27,7 @@ class PriorityQueue(Generic[Datum]):
         Insert some data to the queue with a given priority.
         """
         for i in range(self.entries.get_size()):
-            if self.entries[i].priority > priority:
+            if self.entries[i].get_key() > priority:
                 self.entries.insert_at(i, Entry(priority, data))
                 return
 
