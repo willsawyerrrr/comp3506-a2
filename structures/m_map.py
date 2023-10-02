@@ -16,7 +16,7 @@ from structures.m_entry import Entry
 from structures.m_single_linked_list import SingleLinkedList
 from structures.m_util import Hashable
 
-Key = TypeVar("Key", Hashable)
+Key = TypeVar("Key", bound=Hashable)
 Value = TypeVar("Value")
 
 BUCKET_COUNT: int = 10
