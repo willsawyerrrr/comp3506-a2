@@ -14,8 +14,9 @@ from typing import Callable, Generic, Optional, TypeVar
 
 from structures.m_entry import Entry
 from structures.m_single_linked_list import SingleLinkedList
+from structures.m_util import Hashable
 
-Key = TypeVar("Key")
+Key = TypeVar("Key", Hashable)
 Value = TypeVar("Value")
 
 NUM_BUCKETS: int = 10
@@ -43,8 +44,20 @@ class Map(Generic[Key, Value]):
         to return the old value if k is already inside the map after updating
         to the new value v.
         """
-        # IMPLEMENT ME!
-        pass
+        bucket = self.compression_function(entry.get_hash())
+
+        if self.buckets[bucket] is None:
+            self.buckets[bucket] = SingleLinkedList()
+
+        cur = self.buckets[bucket].get_head()
+        while cur is not None:
+            if cur.get_value().get_key() == entry.get_key():
+                old_value = cur.get_value().get_value()
+                cur.set_value(entry)
+                return old_value
+            cur = cur.get_next()
+
+        self.buckets[bucket].insert_at_head(entry)
 
     def insert_kv(self, key: Key, value: Value) -> Optional[Value]:
         """
