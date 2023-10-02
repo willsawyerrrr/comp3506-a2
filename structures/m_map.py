@@ -51,7 +51,7 @@ class Map(Generic[Key, Value]):
         cur = self._buckets[bucket].get_head()
         while cur is not None:
             existing = cur.get_data()
-            if existing.get_key() == entry.get_key():
+            if existing == entry:
                 old_value = existing.get_value()
                 existing.update_value(entry)
                 return old_value
@@ -99,7 +99,7 @@ class Map(Generic[Key, Value]):
         cur = self._buckets[bucket].get_head()
         while cur is not None:
             existing = cur.get_data()
-            if existing.get_key() == key:
+            if existing == dummy_entry:
                 return existing.get_value()
             cur = cur.get_next()
 
