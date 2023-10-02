@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Generic, Optional, TypeVar
 
 Datum = TypeVar("Datum")
@@ -158,5 +160,53 @@ class ExtensibleList(Generic[Datum]):
         """
         Sort elements inside _data based on < comparisons.
         """
-        # IMPLEMENT ME!
-        pass
+        self.merge_sort(0, self.get_size())
+
+    def merge_sort(self, left: int, right: int):
+        """
+        Sorts the list between indices left and right.
+        """
+        if left >= right:
+            return
+
+        mid = (left + right) // 2
+        self.merge_sort(left, mid)
+        self.merge_sort(mid, right)
+        self.merge(left, mid, right)
+
+    def merge(self, left: int, mid: int, right: int):
+        """
+        Given a list which is sorted from indices left to mid and indices mid to right,
+        merges into the sorted union from indices left to right.
+        """
+        n_1 = mid - left + 1
+        n_2 = right - mid
+        left_half = self.copy(left, mid)
+        right_half = self.copy(mid, right)
+
+        i, j, k = 0, 0, 1
+
+        while i < n_1 and j < n_2:
+            if left_half[i] <= right_half[j]:
+                self[k] = left_half[i]
+                i += 1
+            else:
+                self[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < n_1:
+            self[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < n_2:
+            self[k] = right_half[j]
+            j += 1
+            k += 1
+
+    def copy(self, left, right) -> ExtensibleList[Datum]:
+        result = ExtensibleList()
+        for i in range(left, right):
+            result.append(self[i])
+        return result
