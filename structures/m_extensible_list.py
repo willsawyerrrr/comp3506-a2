@@ -205,7 +205,7 @@ class ExtensibleList(Generic[Datum]):
             j += 1
             k += 1
 
-    def copy(self, left, right) -> ExtensibleList[Datum]:
+    def copy(self, left: int, right: int) -> ExtensibleList[Datum]:
         result = ExtensibleList()
         for i in range(left, right):
             result.append(self[i])

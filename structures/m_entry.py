@@ -82,10 +82,10 @@ class Destination(Entry[Key, Value]):
     def get_cost_stopover(self) -> int:
         return self._cost_s
 
-    def update_cost_money(self, ncm) -> None:
+    def update_cost_money(self, ncm: int) -> None:
         self._cost_m = ncm
 
-    def update_cost_stopover(self, ncs) -> None:
+    def update_cost_stopover(self, ncs: int) -> None:
         self._cost_s = ncs
 
     # You may add helpers/additional functionality below if you wish, and

@@ -13,7 +13,7 @@ get_hash function to return -1 for example.
 from typing import Callable, Generic, Optional, TypeVar
 
 from structures.m_entry import Entry
-from structures.m_single_linked_list import SingleLinkedList
+from structures.m_single_linked_list import SingleLinkedList, SingleNode
 from structures.m_util import Hashable
 
 Key = TypeVar("Key", bound=Hashable)
@@ -50,13 +50,14 @@ class Map(Generic[Key, Value]):
 
         cur = self._buckets[bucket].get_head()
         while cur is not None:
-            if cur.get_value().get_key() == entry.get_key():
-                old_value = cur.get_value().get_value()
-                cur.set_value(entry)
+            existing = cur.get_data()
+            if existing.get_key() == entry.get_key():
+                old_value = existing.get_value()
+                existing.update_value(entry)
                 return old_value
             cur = cur.get_next()
 
-        self._buckets[bucket].insert_at_head(entry)
+        self._buckets[bucket].insert_to_front(SingleNode(entry))
 
     def insert_kv(self, key: Key, value: Value) -> Optional[Value]:
         """
@@ -80,7 +81,8 @@ class Map(Generic[Key, Value]):
         if (value := self.find(key)) is None:
             return
 
-        bucket = self._compression_function(key.get_hash())
+        dummy_entry = Entry(key, None)
+        bucket = self._compression_function(dummy_entry.get_hash())
         self._buckets[bucket].find_and_remove_element(Entry(key, value))
 
     def find(self, key: Key) -> Optional[Value]:
@@ -88,15 +90,17 @@ class Map(Generic[Key, Value]):
         Find and return the value v corresponding to key k if it exists; return None
         otherwise.
         """
-        bucket = self._compression_function(key.get_hash())
+        dummy_entry = Entry(key, None)
+        bucket = self._compression_function(dummy_entry.get_hash())
 
         if self._buckets[bucket] is None:
             return
 
         cur = self._buckets[bucket].get_head()
         while cur is not None:
-            if cur.get_value().get_key() == key:
-                return cur.get_data().get_value()
+            existing = cur.get_data()
+            if existing.get_key() == key:
+                return existing.get_value()
             cur = cur.get_next()
 
     def __getitem__(self, key: Key) -> Optional[Value]:
