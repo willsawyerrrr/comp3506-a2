@@ -7,13 +7,12 @@ from __future__ import annotations
 import random
 import re
 from pathlib import Path
-from typing import Any, Generic, Optional, TypeVar
+from typing import Generic, Optional, TypeVar
 
 Datum = TypeVar("Datum")
 
-Weight = int
-Unweighted = Any
-Weighted = tuple[Unweighted, Weight]
+Unweighted = TypeVar("Unweighted")
+Weighted = tuple[Unweighted, int]
 
 MaybeWeighted = Unweighted | Weighted
 
@@ -31,11 +30,11 @@ class Node(Generic[Datum]):
     def get_id(self) -> int:
         return self._id
 
-    def get_data(self) -> Datum:
+    def get_data(self) -> Optional[Datum]:
         return self._data
 
 
-class LatticeNode(Node):
+class LatticeNode(Node, Generic[Datum]):
     """
     A special lattice type; has four possible neighbors, as well as x and y coordinates.
     """
@@ -46,10 +45,10 @@ class LatticeNode(Node):
         col: int,
         nid: int,
         data: Datum = None,
-        north: LatticeNode = None,
-        east: LatticeNode = None,
-        south: LatticeNode = None,
-        west: LatticeNode = None,
+        north: Optional[LatticeNode[Datum]] = None,
+        east: Optional[LatticeNode[Datum]] = None,
+        south: Optional[LatticeNode[Datum]] = None,
+        west: Optional[LatticeNode[Datum]] = None,
     ) -> None:
         super().__init__(nid, data)
         self._row = row
@@ -66,19 +65,19 @@ class LatticeNode(Node):
         return self._row, self._col
 
     # Following functions return the specific {N,E,S,W} neighbors
-    def get_north(self) -> Optional[LatticeNode]:
+    def get_north(self) -> Optional[LatticeNode[Datum]]:
         return self._north
 
-    def get_east(self) -> Optional[LatticeNode]:
+    def get_east(self) -> Optional[LatticeNode[Datum]]:
         return self._east
 
-    def get_south(self) -> Optional[LatticeNode]:
+    def get_south(self) -> Optional[LatticeNode[Datum]]:
         return self._south
 
-    def get_west(self) -> Optional[LatticeNode]:
+    def get_west(self) -> Optional[LatticeNode[Datum]]:
         return self._west
 
-    def get_adjacent(self) -> list[LatticeNode]:
+    def get_adjacent(self) -> list[LatticeNode[Datum]]:
         """
         Return a list of adjacent nodes to self.
         """
