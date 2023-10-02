@@ -83,10 +83,11 @@ class Map(Generic[Key, Value]):
         Remove the key/value pair corresponding to key k from the
         data structure. Don't return anything.
         """
-        # You may or may not need this variable depending on your impl.
-        dummy_entry = Entry(key, None)  # Feel free to remove me...
-        # IMPLEMENT ME!
-        pass
+        if (value := self.find(key)) is None:
+            return
+
+        bucket = self.compression_function(key.get_hash())
+        self.buckets[bucket].find_and_remove_element(Entry(key, value))
 
     def find(self, key: Key) -> Optional[Value]:
         """
