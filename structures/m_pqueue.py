@@ -47,8 +47,7 @@ class PriorityQueue(Generic[Datum]):
         """
         Return the highest priority value from the queue, but do not remove it
         """
-        # IMPLEMENT ME!
-        pass
+        return self.entries.get_at(0).get_value()
 
     def remove_min(self) -> Datum:
         """
