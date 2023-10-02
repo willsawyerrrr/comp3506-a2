@@ -124,3 +124,4 @@ class Map(Generic[Key, Value]):
             bucket = self._buckets[i]
             if bucket is not None and bucket.get_size() != 0:
                 return False
+        return True
