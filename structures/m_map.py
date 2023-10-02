@@ -19,7 +19,7 @@ from structures.m_util import Hashable
 Key = TypeVar("Key", Hashable)
 Value = TypeVar("Value")
 
-NUM_BUCKETS: int = 10
+BUCKET_COUNT: int = 10
 """Number of buckets in the underlying hash table."""
 
 
@@ -37,8 +37,8 @@ class Map(Generic[Key, Value]):
         """
         self.buckets: list[Optional[SingleLinkedList[Entry[Key, Value]]]] = [
             None
-        ] * NUM_BUCKETS
-        self.compression_function: Callable[[int], int] = lambda x: x % NUM_BUCKETS
+        ] * BUCKET_COUNT
+        self.compression_function: Callable[[int], int] = lambda x: x % BUCKET_COUNT
 
     def insert(self, entry: Entry[Key, Value]) -> Optional[Value]:
         """
@@ -116,14 +116,14 @@ class Map(Generic[Key, Value]):
 
     def get_size(self) -> int:
         size = 0
-        for i in range(NUM_BUCKETS):
+        for i in range(BUCKET_COUNT):
             bucket = self.buckets[i]
             if bucket is not None:
                 size += bucket.get_size()
         return size
 
     def is_empty(self) -> bool:
-        for i in range(NUM_BUCKETS):
+        for i in range(BUCKET_COUNT):
             bucket = self.buckets[i]
             if bucket is not None and bucket.get_size() != 0:
                 return False
