@@ -115,8 +115,12 @@ class Map(Generic[Key, Value]):
         return self.find(key)
 
     def get_size(self) -> int:
-        # IMPLEMENT ME!
-        pass
+        size = 0
+        for i in range(NUM_BUCKETS):
+            bucket = self.buckets[i]
+            if bucket is not None:
+                size += bucket.get_size()
+        return size
 
     def is_empty(self) -> bool:
         for i in range(NUM_BUCKETS):
