@@ -93,10 +93,16 @@ class Map(Generic[Key, Value]):
         Find and return the value v corresponding to key k if it
         exists; return None otherwise.
         """
-        # You may or may not need this variable depending on your impl.
-        dummy_entry = Entry(key, None)  # Feel free to remove me...
-        # IMPLEMENT ME!
-        pass
+        bucket = self.compression_function(key.get_hash())
+
+        if self.buckets[bucket] is None:
+            return
+
+        cur = self.buckets[bucket].get_head()
+        while cur is not None:
+            if cur.get_value().get_key() == key:
+                return cur.get_data().get_value()
+            cur = cur.get_next()
 
     def __getitem__(self, key: Key) -> Optional[Value]:
         """
