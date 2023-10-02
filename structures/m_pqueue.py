@@ -54,8 +54,7 @@ class PriorityQueue(Generic[Datum]):
         Extract (remove) the highest priority value from the queue.
         You must then maintain the queue to ensure priority order.
         """
-        # IMPLEMENT ME!
-        pass
+        return self.entries.remove_at(0).get_value()
 
     def get_size(self) -> int:
         return self.entries.get_size()
