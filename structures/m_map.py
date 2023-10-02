@@ -33,22 +33,22 @@ class Map(Generic[Key, Value]):
         """
         Construct the map.
         """
-        self.buckets: list[Optional[SingleLinkedList[Entry[Key, Value]]]] = [
+        self._buckets: list[Optional[SingleLinkedList[Entry[Key, Value]]]] = [
             None
         ] * BUCKET_COUNT
-        self.compression_function: Callable[[int], int] = lambda x: x % BUCKET_COUNT
+        self._compression_function: Callable[[int], int] = lambda x: x % BUCKET_COUNT
 
     def insert(self, entry: Entry[Key, Value]) -> Optional[Value]:
         """
         Associate value v with key k for efficient lookups. Returns the old value if k
         is already inside the map after updating to the new value v.
         """
-        bucket = self.compression_function(entry.get_hash())
+        bucket = self._compression_function(entry.get_hash())
 
-        if self.buckets[bucket] is None:
-            self.buckets[bucket] = SingleLinkedList()
+        if self._buckets[bucket] is None:
+            self._buckets[bucket] = SingleLinkedList()
 
-        cur = self.buckets[bucket].get_head()
+        cur = self._buckets[bucket].get_head()
         while cur is not None:
             if cur.get_value().get_key() == entry.get_key():
                 old_value = cur.get_value().get_value()
@@ -56,7 +56,7 @@ class Map(Generic[Key, Value]):
                 return old_value
             cur = cur.get_next()
 
-        self.buckets[bucket].insert_at_head(entry)
+        self._buckets[bucket].insert_at_head(entry)
 
     def insert_kv(self, key: Key, value: Value) -> Optional[Value]:
         """
@@ -80,20 +80,20 @@ class Map(Generic[Key, Value]):
         if (value := self.find(key)) is None:
             return
 
-        bucket = self.compression_function(key.get_hash())
-        self.buckets[bucket].find_and_remove_element(Entry(key, value))
+        bucket = self._compression_function(key.get_hash())
+        self._buckets[bucket].find_and_remove_element(Entry(key, value))
 
     def find(self, key: Key) -> Optional[Value]:
         """
         Find and return the value v corresponding to key k if it exists; return None
         otherwise.
         """
-        bucket = self.compression_function(key.get_hash())
+        bucket = self._compression_function(key.get_hash())
 
-        if self.buckets[bucket] is None:
+        if self._buckets[bucket] is None:
             return
 
-        cur = self.buckets[bucket].get_head()
+        cur = self._buckets[bucket].get_head()
         while cur is not None:
             if cur.get_value().get_key() == key:
                 return cur.get_data().get_value()
@@ -111,7 +111,7 @@ class Map(Generic[Key, Value]):
         """
         size = 0
         for i in range(BUCKET_COUNT):
-            bucket = self.buckets[i]
+            bucket = self._buckets[i]
             if bucket is not None:
                 size += bucket.get_size()
         return size
@@ -121,6 +121,6 @@ class Map(Generic[Key, Value]):
         Returns whether the map contains no entries.
         """
         for i in range(BUCKET_COUNT):
-            bucket = self.buckets[i]
+            bucket = self._buckets[i]
             if bucket is not None and bucket.get_size() != 0:
                 return False
