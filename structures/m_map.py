@@ -10,12 +10,16 @@ Note that if you opt to not use hashing, then you can simply override the
 get_hash function to return -1 for example.
 """
 
-from typing import Generic, Optional, TypeVar
+from typing import Callable, Generic, Optional, TypeVar
 
 from structures.m_entry import Entry
+from structures.m_single_linked_list import SingleLinkedList
 
 Key = TypeVar("Key")
 Value = TypeVar("Value")
+
+NUM_BUCKETS: int = 10
+"""Number of buckets in the underlying hash table."""
 
 
 class Map(Generic[Key, Value]):
@@ -30,8 +34,8 @@ class Map(Generic[Key, Value]):
         You are free to make any changes you find suitable in this function
         to initialise your map.
         """
-        # IMPLEMENT ME!
-        pass
+        self.buckets: list[SingleLinkedList[Entry[Key, Value]]] = [None] * NUM_BUCKETS
+        self.compression_function: Callable[[int], int] = lambda x: x % NUM_BUCKETS
 
     def insert(self, entry: Entry[Key, Value]) -> Optional[Value]:
         """
