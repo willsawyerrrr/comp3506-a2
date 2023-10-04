@@ -6,13 +6,21 @@ Datum = TypeVar("Datum")
 
 
 class ExtensibleList(Generic[Datum]):
-    def __init__(self) -> None:
+    def __init__(self, fixed_size: Optional[int] = None) -> None:
         """
         Construct the list with 4 None elements to begin with.
+
+        @param: fixed_size
+            The fixed size of the list. If None, the list is not fixed size.
         """
-        self._data = [None] * 4
-        self._size = 0
-        self._capacity = 4
+        if fixed_size:
+            self._data = [None] * fixed_size
+            self._size = fixed_size
+            self._capacity = fixed_size
+        else:
+            self._data = [None] * 4
+            self._size = 0
+            self._capacity = 4
 
     def __str__(self) -> str:
         """

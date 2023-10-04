@@ -34,11 +34,48 @@ def dfs_traversal(
     # Stores the keys of the nodes in the order they were visited
     visited_order = ExtensibleList()
     # Stores the path from the origin to the goal
-    path = ExtensibleList()
+    path = Stack()
+    # Stores the nodes that have been visited
+    visited = ExtensibleList(graph.get_num_nodes())
 
-    # If everything worked, you should return like this
-    return (path, visited_order)
-    # If you couldn't get to the goal, you should return like this
+    path_or_failure, visited_order = dfs_helper(
+        graph, origin, goal, visited, visited_order, path
+    )
+    if isinstance(path_or_failure, TraversalFailure):
+        return (path_or_failure, visited_order)
+
+    reversed_path = ExtensibleList()
+    while not path.is_empty():
+        reversed_path.append(path.pop())
+
+    return (reversed_path, visited_order)
+
+
+def dfs_helper(
+    graph: Graph[Datum] | LatticeGraph[Datum],
+    origin: int,
+    goal: int,
+    visited: ExtensibleList,
+    visited_order: ExtensibleList,
+    path: Stack,
+) -> tuple[Stack, ExtensibleList] | tuple[TraversalFailure, ExtensibleList]:
+    visited.set_at(origin, True)
+    visited_order.append(origin)
+
+    if origin == goal:
+        path.push(origin)
+        return (path, visited_order)
+
+    for neighbour in reversed(graph.get_neighbours(origin)):
+        neighbour = neighbour.get_id()
+        if not visited.get_at(neighbour):
+            path_or_failure, visited_order = dfs_helper(
+                graph, neighbour, goal, visited, visited_order, path
+            )
+            if isinstance(path_or_failure, Stack):
+                path.push(origin)
+                return (path_or_failure, visited_order)
+
     return (TraversalFailure.DISCONNECTED, visited_order)
 
 

@@ -142,6 +142,9 @@ class Graph(Generic[Datum]):
                         f"No node has ID {neighbour} but adjacency list refers to it."
                     )
 
+    def get_num_nodes(self) -> int:
+        return len(self._nodes)
+
     def get_node(self, index: int) -> Optional[Node[Datum]]:
         try:
             return self._nodes[index]
