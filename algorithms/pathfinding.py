@@ -18,18 +18,18 @@ def dfs_traversal(
     Task 2.1: Depth First Search
 
     @param: graph
-      The general graph or lattice graph to process
+        The general graph or lattice graph to process
     @param: origin
-      The ID of the node from which to start traversal
+        The ID of the node from which to start traversal
     @param: goal
-      The ID of the target node
+        The ID of the target node
 
     @returns: tuple[ExtensibleList, ExtensibleList]
-      1. The ordered path between the origin and the goal in node IDs;
-      2. The IDs of all nodes in the order they were visited.
+        1. The ordered path between the origin and the goal in node IDs;
+        2. The IDs of all nodes in the order they were visited.
     @returns: tuple[TraversalFailure, ExtensibleList]
-      1. TraversalFailure signals that the path between the origin and the target can not be found;
-      2. The IDs of all nodes in the order they were visited.
+        1. TraversalFailure signals that the path between the origin and the target can not be found;
+        2. The IDs of all nodes in the order they were visited.
     """
     # Stores the keys of the nodes in the order they were visited
     visited_order = ExtensibleList()
@@ -49,18 +49,18 @@ def bfs_traversal(
     Task 2.1: Breadth First Search
 
     @param: graph
-      The general graph or lattice graph to process
+        The general graph or lattice graph to process
     @param: origin
-      The ID of the node from which to start traversal
+        The ID of the node from which to start traversal
     @param: goal
-      The ID of the target node
+        The ID of the target node
 
     @returns: tuple[ExtensibleList, ExtensibleList]
-      1. The ordered path between the origin and the goal in node IDs;
-      2. The IDs of all nodes in the order they were visited.
+        1. The ordered path between the origin and the goal in node IDs;
+        2. The IDs of all nodes in the order they were visited.
     @returns: tuple[TraversalFailure, ExtensibleList]
-      1. TraversalFailure signals that the path between the origin and the target can not be found;
-      2. The IDs of all nodes in the order they were visited.
+        1. TraversalFailure signals that the path between the origin and the target can not be found;
+        2. The IDs of all nodes in the order they were visited.
     """
     # Stores the keys of the nodes in the order they were visited
     visited_order = ExtensibleList()
@@ -80,18 +80,18 @@ def greedy_traversal(
     Task 2.2: Greedy Traversal
 
     @param: graph
-      The lattice graph to process
+        The lattice graph to process
     @param: origin
-      The ID of the node from which to start traversal
+        The ID of the node from which to start traversal
     @param: goal
-      The ID of the target node
+        The ID of the target node
 
     @returns: tuple[ExtensibleList, ExtensibleList]
-      1. The ordered path between the origin and the goal in node IDs;
-      2. The IDs of all nodes in the order they were visited.
+        1. The ordered path between the origin and the goal in node IDs;
+        2. The IDs of all nodes in the order they were visited.
     @returns: tuple[TraversalFailure, ExtensibleList]
-      1. TraversalFailure signals that the path between the origin and the target can not be found;
-      2. The IDs of all nodes in the order they were visited.
+        1. TraversalFailure signals that the path between the origin and the target can not be found;
+        2. The IDs of all nodes in the order they were visited.
     """
     pass
 
@@ -112,17 +112,17 @@ def max_traversal(
     Task 2.3: Maximize vertex visits traversal
 
     @param: graph
-      The lattice graph to process
+        The lattice graph to process
     @param: origin
-      The ID of the node from which to start traversal
+        The ID of the node from which to start traversal
     @param: goal
-      The ID of the target node
+        The ID of the target node
 
     @returns: tuple[ExtensibleList, ExtensibleList]
-      1. The ordered path between the origin and the goal in node IDs;
-      2. The IDs of all nodes in the order they were visited.
+        1. The ordered path between the origin and the goal in node IDs;
+        2. The IDs of all nodes in the order they were visited.
     @returns: tuple[TraversalFailure, ExtensibleList]
-      1. TraversalFailure signals that the path between the origin and the target can not be found;
-      2. The IDs of all nodes in the order they were visited.
+        1. TraversalFailure signals that the path between the origin and the target can not be found;
+        2. The IDs of all nodes in the order they were visited.
     """
     pass
