@@ -9,4 +9,6 @@ I use GitHub Copilot; however, typically only for boilerplate and documentation.
 In the case of this assignment, as the API is provided, Copilot was only used for
 writing docstrings for additional methods.
 
-I did not use any other form of Generative AI.
+I gave the below prompt to ChatGPT which suggested the use of a dictionary to store
+parent-child relationships within a BFS pathfinding algorithm:
+    "how to keep track of path during bfs"

@@ -101,13 +101,41 @@ def bfs_traversal(
     """
     # Stores the keys of the nodes in the order they were visited
     visited_order = ExtensibleList()
-    # Stores the path from the origin to the goal
-    path = ExtensibleList()
+    # Stores the keys of the nodes that have been visited
+    visited = ExtensibleList(graph.get_num_nodes())
+    # Stores the parent of each node
+    parents = Map()
 
-    # If everything worked, you should return like this
+    queue = PriorityQueue()
+    queue.insert_fifo(origin)
+
+    while not queue.is_empty():
+        node = queue.remove_min()
+        visited.set_at(node, True)
+        visited_order.append(node)
+
+        if node == goal:
+            break
+
+        for neighbour in graph.get_neighbours(node):
+            neighbour = neighbour.get_id()
+            if not visited.get_at(neighbour):
+                queue.insert_fifo(neighbour)
+                parents.insert_kv(neighbour, node)
+    else:
+        return (TraversalFailure.DISCONNECTED, visited_order)
+
+    stack = Stack()
+    while node != origin:
+        stack.push(node)
+        node = parents.find(node)
+
+    path = ExtensibleList()
+    path.append(origin)
+    while not stack.is_empty():
+        path.append(stack.pop())
+
     return (path, visited_order)
-    # If you couldn't get to the goal, you should return like this
-    return (TraversalFailure.DISCONNECTED, visited_order)
 
 
 def greedy_traversal(
