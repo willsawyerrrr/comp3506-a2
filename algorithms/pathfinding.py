@@ -161,13 +161,12 @@ def greedy_traversal(
     pass
 
 
-def distance(x_1: float, y_1: float, x_2: float, y_2: float) -> float:
+def distance(p: tuple[int, int], q: tuple[int, int]) -> float:
     """
-    Return the distance between a point at coordinate (x_1, y_1) and a point
-    at coordinate (x_2, y_2). You may re-write this method with other
-    parameters if you wish. Please comment on your choice of distance function.
+    Return the distance between a point a and a point q.
     """
-    pass
+    # Manhattan distance as it is the most appropriate for a lattice graph
+    return abs(p[0] - q[0]) + abs(p[1] - q[1])
 
 
 def max_traversal(
