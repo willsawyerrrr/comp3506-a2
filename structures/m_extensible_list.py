@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Generic, Optional, TypeVar
 
+from structures.m_util import binary_search
+
 Datum = TypeVar("Datum")
 
 
@@ -218,3 +220,9 @@ class ExtensibleList(Generic[Datum]):
         for i in range(left, right):
             result.append(self[i])
         return result
+
+    def __contains__(self, item: Datum):
+        sorted = self.copy(0, self.get_size())
+        sorted.sort()
+        index = binary_search(sorted, item, 0, self.get_size() - 1)
+        return sorted[index] == item

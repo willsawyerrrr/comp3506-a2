@@ -21,8 +21,46 @@ def has_cycles(graph: Graph[Datum]) -> bool:
     @returns: bool
         Whether or not the graph contains cycles
     """
+    graph_size = graph.get_num_nodes()
+    visited_nodes = ExtensibleList(graph_size)
 
-    pass
+    for node in range(graph_size):
+        if not visited_nodes[node]:
+            if has_cycle_around(
+                graph,
+                node,
+                visited_nodes,
+                ExtensibleList(),
+            ):
+                return True
+
+    return False
+
+
+def has_cycle_around(
+    graph: Graph[Datum],
+    node: int,
+    visited_nodes: ExtensibleList,
+    visited_edges: ExtensibleList,
+    previous_node: int = None,
+) -> bool:
+    visited_nodes[node] = True
+
+    for neighbour in graph.get_neighbours(node):
+        neighbour = neighbour.get_id()
+        edge = (neighbour, node) if neighbour < node else (node, neighbour)
+
+        if edge not in visited_edges:
+            if not visited_nodes[neighbour]:
+                visited_edges.append(edge)
+                if has_cycle_around(
+                    graph, neighbour, visited_nodes, visited_edges, node
+                ):
+                    return True
+            elif neighbour != previous_node:
+                return True
+
+    return False
 
 
 def enumerate_hubs(graph: Graph[Datum], min_degree: int) -> ExtensibleList:
