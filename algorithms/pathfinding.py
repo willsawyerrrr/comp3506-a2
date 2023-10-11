@@ -205,7 +205,7 @@ def greedy_traversal(
 
 def distance(p: tuple[int, int], q: tuple[int, int]) -> float:
     """
-    Return the distance between a point a and a point q.
+    Return the distance between a point p and a point q.
     """
     # Manhattan distance as it is the most appropriate for a lattice graph
     return abs(p[0] - q[0]) + abs(p[1] - q[1])
