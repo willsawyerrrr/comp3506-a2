@@ -88,5 +88,18 @@ class Destination(Entry[Key, Value]):
     def update_cost_stopover(self, ncs: int) -> None:
         self._cost_s = ncs
 
-    # You may add helpers/additional functionality below if you wish, and
-    # you may override inherited methods here if you wish
+    def get_triple(self) -> tuple[Key, int, int]:
+        """Returns the Destination's monetary, stopover, key triples"""
+        return (self.get_cost_money(), self.get_cost_stopover(), self.get_key())
+
+    def __eq__(self, other) -> bool:
+        """
+        Compares two Destination objects by their monetary, stopover, key triples.
+        """
+        return self.get_triple() == other.get_triple()
+
+    def __lt__(self, other) -> bool:
+        """
+        Compares two Destination objects by their monetary, stopover, key triples.
+        """
+        return self.get_triple() < other.get_triple()
