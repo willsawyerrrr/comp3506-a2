@@ -18,7 +18,7 @@ from structures.m_single_linked_list import SingleLinkedList, SingleNode
 Key = TypeVar("Key")
 Value = TypeVar("Value")
 
-BUCKET_COUNT: int = 10
+BUCKET_COUNT: int = 250
 """Number of buckets in the underlying hash table."""
 
 
