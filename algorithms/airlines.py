@@ -1,7 +1,7 @@
 import decimal
 from typing import TypeVar
 
-from structures.m_entry import Entry
+from structures.m_entry import Destination, Entry
 from structures.m_extensible_list import ExtensibleList
 from structures.m_graph import Graph
 from structures.m_map import Map
@@ -134,7 +134,50 @@ def calculate_flight_budget(
         Each element of the ExtensibleList should be of type Destination - see
         m_entry.py for the definition of that type.
     """
-    pass
+    graph_size = graph.get_num_nodes()
+    queue = PriorityQueue()
+    distances = ExtensibleList(graph_size)
+
+    parents = Map()
+
+    queue.insert(0, origin)
+
+    for node in range(graph_size):
+        if node == origin:
+            distances[node] = Entry(node, 0)
+        else:
+            distances[node] = Entry(node, decimal.MAX_EMAX)
+
+    while not queue.is_empty():
+        node = queue.remove_min()
+        for neighbour, weight in graph.get_neighbours(node):
+            neighbour = neighbour.get_id()
+            monetary_cost = distances[node].get_value() + weight
+            if monetary_cost < distances[neighbour].get_value():
+                distances[neighbour] = Entry(neighbour, monetary_cost)
+                queue.insert(monetary_cost, neighbour)
+                parents.insert_kv(neighbour, node)
+
+    results = ExtensibleList()
+    for i in range(graph_size):
+        if i == origin:
+            continue
+
+        monetary_cost = distances[i].get_value()
+        stopover_cost = 0
+
+        parent = parents[i]
+
+        while parent != origin:
+            stopover_cost += 1
+            parent = parents[parent]
+
+        if stopover_cost <= stopover_budget and monetary_cost <= monetary_budget:
+            results.append(Destination(i, monetary_cost, monetary_cost, stopover_cost))
+
+    results.sort()
+
+    return results
 
 
 def maintenance_optimisation(graph: Graph[Datum], origin: int) -> ExtensibleList:
