@@ -1,3 +1,4 @@
+import decimal
 from typing import TypeVar
 
 from structures.m_entry import Entry
@@ -150,7 +151,28 @@ def maintenance_optimisation(graph: Graph[Datum], origin: int) -> ExtensibleList
         Please use the Entry type here, with the key being the node identifier,
         and the value being the cost.
     """
-    pass
+    graph_size = graph.get_num_nodes()
+    queue = PriorityQueue()
+    distances = ExtensibleList(graph_size)
+
+    queue.insert(0, origin)
+
+    for node in range(graph_size):
+        if node == origin:
+            distances[node] = Entry(node, 0)
+        else:
+            distances[node] = Entry(node, decimal.MAX_EMAX)
+
+    while not queue.is_empty():
+        node = queue.remove_min()
+        for neighbour, weight in graph.get_neighbours(node):
+            neighbour = neighbour.get_id()
+            distance = distances[node].get_value() + weight
+            if distance < distances[neighbour].get_value():
+                distances[neighbour] = Entry(neighbour, distance)
+                queue.insert(distance, neighbour)
+
+    return distances
 
 
 def all_city_logistics(graph: Graph[Datum]) -> Map:
