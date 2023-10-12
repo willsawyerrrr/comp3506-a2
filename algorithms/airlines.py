@@ -6,8 +6,6 @@ from structures.m_extensible_list import ExtensibleList
 from structures.m_graph import Graph
 from structures.m_map import Map
 from structures.m_pqueue import PriorityQueue
-from structures.m_stack import Stack
-from structures.m_util import Hashable, TraversalFailure
 
 Datum = TypeVar("Datum")
 

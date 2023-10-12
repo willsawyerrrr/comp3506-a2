@@ -1,6 +1,6 @@
 from typing import Generic, TypeVar
 
-from structures.m_entry import Destination, Entry
+from structures.m_entry import Entry
 from structures.m_extensible_list import ExtensibleList
 from structures.m_util import binary_search
 

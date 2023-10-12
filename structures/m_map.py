@@ -14,7 +14,6 @@ from typing import Callable, Generic, Optional, TypeVar
 
 from structures.m_entry import Entry
 from structures.m_single_linked_list import SingleLinkedList, SingleNode
-from structures.m_util import Hashable
 
 Key = TypeVar("Key")
 Value = TypeVar("Value")
