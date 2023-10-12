@@ -229,7 +229,7 @@ def all_city_logistics(graph: Graph[Datum]) -> Map:
         The map containing node pairs as keys and the cost of the shortest path
         between them as values. So, the node pairs should be inserted as keys
         of the form "0_1" where 0 is the origin node and 1 is the target node
-      (their type is a string using an underscore as a seperator). The
+        (their type is a string using an underscore as a seperator). The
         value should be an integer (cost of the path), or a TraversalFailure
         enumeration.
     """
