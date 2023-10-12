@@ -1,4 +1,4 @@
-import decimal
+import sys
 from typing import TypeVar
 
 from structures.m_extensible_list import ExtensibleList
@@ -253,7 +253,7 @@ def max_traversal(
             neighbour = neighbour.get_id()
             if not visited.get_at(neighbour):
                 if neighbour == goal:
-                    queue.insert(decimal.MAX_EMAX, neighbour)
+                    queue.insert(sys.maxsize, neighbour)
                 else:
                     queue.insert(
                         distance(

@@ -1,4 +1,4 @@
-import decimal
+import sys
 from typing import TypeVar
 
 from structures.m_entry import Destination, Entry
@@ -146,7 +146,7 @@ def calculate_flight_budget(
         if node == origin:
             distances[node] = Entry(node, 0)
         else:
-            distances[node] = Entry(node, decimal.MAX_EMAX)
+            distances[node] = Entry(node, sys.maxsize)
 
     while not queue.is_empty():
         node = queue.remove_min()
@@ -204,7 +204,7 @@ def maintenance_optimisation(graph: Graph[Datum], origin: int) -> ExtensibleList
         if node == origin:
             distances[node] = Entry(node, 0)
         else:
-            distances[node] = Entry(node, decimal.MAX_EMAX)
+            distances[node] = Entry(node, sys.maxsize)
 
     while not queue.is_empty():
         node = queue.remove_min()
