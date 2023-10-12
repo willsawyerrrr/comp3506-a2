@@ -76,8 +76,41 @@ def enumerate_hubs(graph: Graph[Datum], min_degree: int) -> ExtensibleList:
         A list of all Node IDs corresponding to the largest subgraph
         where each vertex has a degree of at least min_degree.
     """
+    graph_size = graph.get_num_nodes()
+    degrees = ExtensibleList(graph_size)
+    deleted = ExtensibleList(graph_size)
 
-    pass
+    for node in range(graph_size):
+        degrees[node] = len(graph.get_neighbours(node))
+
+    for node in range(graph_size):
+        if not deleted[node] and degrees[node] < min_degree:
+            delete_node(graph, min_degree, node, degrees, deleted)
+
+    result = ExtensibleList()
+    for node in range(graph_size):
+        if not deleted[node]:
+            result.append(node)
+
+    return result
+
+
+def delete_node(
+    graph: Graph[Datum],
+    min_degree: int,
+    node: int,
+    degrees: ExtensibleList[int],
+    deleted: ExtensibleList[bool],
+):
+    deleted[node] = True
+    degrees[node] = None
+
+    for neighbour in graph.get_neighbours(node):
+        neighbour = neighbour.get_id()
+        if not deleted[neighbour]:
+            degrees[neighbour] -= 1
+            if degrees[neighbour] < min_degree:
+                delete_node(graph, min_degree, neighbour, degrees, deleted)
 
 
 def calculate_flight_budget(
