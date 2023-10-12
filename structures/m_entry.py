@@ -55,8 +55,7 @@ class Entry(Hashable, Generic[Key, Value]):
         functions, but you need to implement it here (and cite it in your
         report/statement file).
         """
-        # TODO: Implement this
-        return 7
+        return self.get_key()
 
     def __str__(self) -> str:
         return f"({self._key} -> {self._value})"
